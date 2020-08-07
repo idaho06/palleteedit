@@ -140,16 +140,47 @@ int redrawscreen(SDL_Renderer * renderer, SDL_Surface * surface){
         if (G_cursorPoint < 0) {G_cursorPoint = 0;}
         if (G_cursorPoint > size - 1) {G_cursorPoint = size - 1;}
 
+        // delete previous cursors
         for (int i = 0; i < size; i++){
             rectangleRGBA(renderer, rx+(8*0), ry+(i*10)-2, rx+(8*0)+width, ry+((i+1)*10)-1, 0x00, 0x00, 0x00, 0xff);
         }
-
+        // draw cursor
         rectangleRGBA(renderer, rx+(8*0), ry+(G_cursorPoint*10)-2, rx+(8*0)+width, ry+((G_cursorPoint+1)*10)-1, 0xff, 0xff, 0x00, 0xff);
 
-        // Then we draw the cursor for current point selected
+        // draw red value for current point
+        boxRGBA(renderer, G_boxRx[0], G_boxRy[2]+2, G_boxRx[2], G_boxRy[2]+16, 0x00, 0x00, 0x00, 0xff );
+        vlineRGBA(renderer, 
+                G_boxRx[0] + (Sint16)colorpoints[G_cursorPoint].color.r, 
+                G_boxRy[2]+2, G_boxRy[2]+16, 0xff, 0xff, 0x00, 0xff);
+        // draw green value for current point
+        boxRGBA(renderer, G_boxGx[0], G_boxGy[2]+2, G_boxGx[2], G_boxGy[2]+16, 0x00, 0x00, 0x00, 0xff );
+        vlineRGBA(renderer, 
+                G_boxGx[0] + (Sint16)colorpoints[G_cursorPoint].color.g, 
+                G_boxGy[2]+2, G_boxGy[2]+16, 0xff, 0xff, 0x00, 0xff);
+        // draw blue value for current point
+        boxRGBA(renderer, G_boxBx[0], G_boxBy[2]+2, G_boxBx[2], G_boxBy[2]+16, 0x00, 0x00, 0x00, 0xff );
+        vlineRGBA(renderer, 
+                G_boxBx[0] + (Sint16)colorpoints[G_cursorPoint].color.b, 
+                G_boxBy[2]+2, G_boxBy[2]+16, 0xff, 0xff, 0x00, 0xff);
+        // draw alpha value for current point
+        boxRGBA(renderer, G_boxAx[0], G_boxAy[2]+2, G_boxAx[2], G_boxAy[2]+16, 0x00, 0x00, 0x00, 0xff );
+        vlineRGBA(renderer, 
+                G_boxAx[0] + (Sint16)colorpoints[G_cursorPoint].color.a, 
+                G_boxAy[2]+2, G_boxAy[2]+16, 0xff, 0xff, 0x00, 0xff);
+        // draw all point in the pallete. The selected one with a larger line
+        boxRGBA(renderer, G_boxPx[0], G_boxPy[2]+2, G_boxPx[2], G_boxPy[2]+16, 0x00, 0x00, 0x00, 0xff );
+        for (int i = 0; i < size; i++){
+            vlineRGBA(renderer, 
+                G_boxPx[0] + (Sint16)colorpoints[i].index, 
+                G_boxPy[2]+2, G_boxPy[2]+8, 0xff, 0xff, 0x00, 0xff);
+        }
+        vlineRGBA(renderer, 
+                G_boxPx[0] + (Sint16)colorpoints[G_cursorPoint].index, 
+                G_boxPy[2]+2, G_boxPy[2]+16, 0xff, 0xff, 0x00, 0xff);
+                
+        // no more cursor drawing for next frame
         G_redraw.pointcursor = false;
     }
-
 
     rx = 8*4;
     ry = 8*48;
