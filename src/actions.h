@@ -4,3 +4,7 @@
 
 int leftClick();
 
+int movePointLeft();
+
+int movePointRight();
+

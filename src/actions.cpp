@@ -146,6 +146,27 @@ int leftClick(){
         }
     }            
 
-
     return 0;
+}
+
+int movePointLeft() {
+    if (G_pallete.setPointIndexLeft(G_cursorPoint)){
+        G_redraw.pallete = true;
+        G_redraw.pointlist = true;
+        G_redraw.pointcursor = true;                
+        return 0;
+    } else {
+        return -1;
+    }
+}
+
+int movePointRight() {
+    if (G_pallete.setPointIndexRight(G_cursorPoint)){
+        G_redraw.pallete = true;
+        G_redraw.pointlist = true;
+        G_redraw.pointcursor = true;                
+        return 0;
+    } else {
+        return -1;
+    }
 }

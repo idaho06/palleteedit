@@ -122,12 +122,65 @@ bool Pallete::setPointIndex(int pos, Uint8 newindex){
     if (pos > size-1) {
         pos = size-1;
     }
-    // TODO: check if there is another point with same index.
-    this->colorpoints[pos].index = newindex;
+    if (!this->isIndexUsed(newindex)){
+        this->colorpoints[pos].index = newindex;
+        this->recalculate();
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Pallete::isIndexUsed(int index){
+    bool found = false;
+    std::vector<ColorPoint>::iterator it = this->colorpoints.begin();
+    while(it != this->colorpoints.end()){
+        if (it->index == index) {
+            found = true;
+        }
+        it++; // next color point
+    }
+ 
+    return found;
+}
+
+bool Pallete::setPointIndexLeft(int pos){
+    int size = static_cast<int>(colorpoints.size());
+    if (pos < 0) {
+        pos = 0;
+    }
+    if (pos > size-1) {
+        pos = size-1;
+    }
+    // if point is the first, then set index to 0x00
+    if (pos == 0){
+        this->colorpoints[pos].index = 0x00;
+    } else {
+        // else, set index to (point-1).index + 1
+        this->colorpoints[pos].index = this->colorpoints[pos-1].index + 0x01;
+    }
     this->recalculate();
     return true;
 }
 
+bool Pallete::setPointIndexRight(int pos){
+    int size = static_cast<int>(colorpoints.size());
+    if (pos < 0) {
+        pos = 0;
+    }
+    if (pos > size-1) {
+        pos = size-1;
+    }
+    // if point is the last, then set index to 0xff
+    if (pos == size-1) {
+        this->colorpoints[pos].index = 0xff;
+    } else {
+        // else, set index to (point+1).index - 1
+        this->colorpoints[pos].index = this->colorpoints[pos+1].index - 0x01;
+    }
+    this->recalculate();
+    return true;
+}
 
 Pallete::~Pallete(){
 

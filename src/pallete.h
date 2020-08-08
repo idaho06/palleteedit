@@ -19,6 +19,7 @@ class Pallete{
         std::vector<ColorPoint> colorpoints;
         std::vector<SDL_Color> pallete;
         void recalculate();
+        bool isIndexUsed(int index);
     public:
         Pallete(); // default to 256 colors in the pallete
         // Pallete(int size); // ?? 
@@ -29,6 +30,8 @@ class Pallete{
         bool setPointColor(int pos, SDL_Color color);
         //bool setPoint(int index, SDL_Color color);
         bool setPointIndex(int pos, Uint8 newindex);
+        bool setPointIndexLeft(int pos);
+        bool setPointIndexRight(int pos);
         bool delPoint(int index);
         ~Pallete();
 };

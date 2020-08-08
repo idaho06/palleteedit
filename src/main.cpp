@@ -71,17 +71,27 @@ int checkEvents(){
                     }
                     case SDLK_DOWN: {
                         G_cursorPoint++;
+                        G_redraw.pallete = true;
                         G_redraw.pointcursor = true;
                         break;
                     }
                     case SDLK_UP: {
                         G_cursorPoint--;
+                        G_redraw.pallete = true;
                         G_redraw.pointcursor = true;
                         break;
                     }
-                }
+                    case SDLK_a: {
+                        movePointLeft();                
+                        break;
+                    }
+                    case SDLK_d: {
+                        movePointRight();                
+                        break;
+                    }
+                } // end of switch (G_event.key.keysym.sym)
                 break;
-            }
+            } // end of case SDL_KEYUP: 
             /*****************
              * MOUSE BUTTONS *
              *****************/                  
@@ -98,9 +108,8 @@ int checkEvents(){
                 }                          
                 break;                          
             }
-                                     
-        }
-    }
+        } // end of switch(G_event.type)
+    } // end of while (SDL_PollEvent(&G_event))
     return 0;
 }
 

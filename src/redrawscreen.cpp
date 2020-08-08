@@ -69,13 +69,7 @@ int redrawscreen(SDL_Renderer * renderer, SDL_Surface * surface){
         SDL_strlcpy(text,"- ALPHA -", TLEN);
         stringRGBA (renderer, G_boxAx[0], G_boxAy[0] - 9, text, 255, 255, 255, 255);
         rectangleRGBA(renderer, G_boxAx[0] - 1, G_boxAy[0] - 1, G_boxAx[2] + 2, G_boxAy[2] + 2, 255, 255, 255, 255);
-        texturedPolygon(renderer, G_boxAx, G_boxAy, 4, surface, 0, 0);
-        i = 0xff;
-        do {
-            // TODO: Use color of the current selected point
-            vlineRGBA(renderer, G_boxAx[0] + (Sint16)i, G_boxAy[0], G_boxAy[2], 0xff, 0xff, 0xff, i);
-        } while (i--);
-
+        // alpha color is drawn in G_redraw.pallete
 
         /* Pallete G_box */
         SDL_strlcpy(text,"- PALLETE -", TLEN);
@@ -86,6 +80,15 @@ int redrawscreen(SDL_Renderer * renderer, SDL_Surface * surface){
         G_redraw.ui = false;
     }
     if (G_redraw.pallete){
+        // Draw alpha with current color
+        texturedPolygon(renderer, G_boxAx, G_boxAy, 4, surface, 0, 0);
+        i = 0xff;
+        do {
+            color = G_pallete.getPointColor(G_cursorPoint);
+            vlineRGBA(renderer, G_boxAx[0] + (Sint16)i, G_boxAy[0], G_boxAy[2], color.r, color.g, color.b, i);
+        } while (i--);
+
+
         // G_pallete G_redraw here
         texturedPolygon(renderer, G_boxPx, G_boxPy, 4, surface, 0, 0);
         // here we call the G_pallete library to draw the result G_pallete
@@ -196,8 +199,10 @@ int redrawscreen(SDL_Renderer * renderer, SDL_Surface * surface){
             {
                 SDL_strlcpy(text,"UP, DOWN: select point in pallete", TLEN);
                 stringRGBA (renderer, rx+(8*0), ry+(8*0), text, 0x88, 0x88, 0x88, 0xff);
-                SDL_strlcpy(text,"MOUSE CLICK: change value", TLEN);
+                SDL_strlcpy(text,"LEFT CLICK: change value", TLEN);
                 stringRGBA (renderer, rx+(8*0), ry+(8*1), text, 0x88, 0x88, 0x88, 0xff);
+                SDL_strlcpy(text,"A, D: move point left, right", TLEN);
+                stringRGBA (renderer, rx+(8*0), ry+(8*2), text, 0x88, 0x88, 0x88, 0xff);
                 SDL_strlcpy(text,"ESC: exit", TLEN);
                 stringRGBA (renderer, rx+(8*0), ry+(8*9), text, 0x88, 0x88, 0x88, 0xff);
                 break;
