@@ -213,6 +213,12 @@ bool Pallete::delPoint(int pos){
     }
 }
 
+bool Pallete::savePalleteArray(){
+    bool result = false;
+    
+
+    return result;
+}
 
 Pallete::~Pallete(){
 

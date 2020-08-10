@@ -1,5 +1,7 @@
 #pragma once
 
+int checkEvents();
+
 int leftClick();
 
 int rightClick();

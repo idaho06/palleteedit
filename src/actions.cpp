@@ -18,6 +18,7 @@ extern Sint16 G_boxPx[];
 extern Sint16 G_boxPy[]; 
 extern int G_cursorPoint; 
 extern enum G_state_t G_state;
+extern SDL_Event G_event;
 
 enum GUIElement {
     BOX_RED, BOX_GREEN, BOX_BLUE, BOX_ALPHA, BOX_PALLETE, GUI_NONE};
@@ -207,3 +208,90 @@ int delPoint(){
         return -1;
     }
 }
+
+int savePalleteArray(){
+    G_pallete.savePalleteArray();
+    return 0;
+}
+
+
+int checkEvents(){
+    while (SDL_PollEvent(&G_event)){
+        switch(G_event.type){
+            case SDL_QUIT: {
+                return 1;
+                break;
+            }
+            /************
+             * KEYBOARD *
+             ************/               
+            case SDL_KEYUP: {
+                switch (G_event.key.keysym.sym) {
+                    case SDLK_SPACE: {
+                        break;
+                    }
+                    case SDLK_ESCAPE: {
+                        return 1;                  
+                        break;
+                    }
+                    case SDLK_r: {
+                        G_redraw.ui = true;
+                        G_redraw.pallete = true;
+                        G_redraw.pointcursor = true;
+                        G_redraw.pointlist = true;
+                        G_redraw.instructions = true;
+                        break;
+                    }
+                    case SDLK_DOWN: {
+                        G_cursorPoint++;
+                        G_redraw.pallete = true;
+                        G_redraw.pointcursor = true;
+                        break;
+                    }
+                    case SDLK_UP: {
+                        G_cursorPoint--;
+                        G_redraw.pallete = true;
+                        G_redraw.pointcursor = true;
+                        break;
+                    }
+                    case SDLK_a: {
+                        movePointLeft();                
+                        break;
+                    }
+                    case SDLK_d: {
+                        movePointRight();                
+                        break;
+                    }
+                    case SDLK_BACKSPACE: {
+                        delPoint();
+                        break;
+                    }
+                    case SDLK_F5: {
+                        savePalleteArray();
+                        break;
+                    }                     
+                } // end of switch (G_event.key.keysym.sym)
+                break;
+            } // end of case SDL_KEYUP: 
+            /*****************
+             * MOUSE BUTTONS *
+             *****************/                  
+            case SDL_MOUSEBUTTONDOWN: {
+                switch (G_event.button.button) {
+                    case SDL_BUTTON_LEFT: {
+                        leftClick(); // checks mouse click position and changes point values                 
+                        break;
+                    }
+                    case SDL_BUTTON_RIGHT: {
+                        rightClick(); // create a new point
+                        break;
+                    }
+                }                          
+                break;                          
+            }
+        } // end of switch(G_event.type)
+    } // end of while (SDL_PollEvent(&G_event))
+    return 0;
+}
+
+
