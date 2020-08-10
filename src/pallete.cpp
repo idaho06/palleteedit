@@ -182,6 +182,38 @@ bool Pallete::setPointIndexRight(int pos){
     return true;
 }
 
+bool Pallete::newPointColor(int pos, SDL_Color color){
+    if (!this->isIndexUsed(pos)){
+        ColorPoint cp;
+        //    i   r     g     b     a
+        cp = { .index = static_cast<Uint8>(pos), 
+            .color = { .r = color.r, .g = color.g, .b = color.b, .a = color.a}};
+        this->colorpoints.push_back(cp);
+        this->recalculate();
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Pallete::delPoint(int pos){
+    int size = static_cast<int>(colorpoints.size());
+    if (pos < 0) {
+        pos = 0;
+    }
+    if (pos > size-1) {
+        pos = size-1;
+    }
+    if (size > 1) {
+        this->colorpoints.erase(this->colorpoints.begin()+pos);
+        this->recalculate();
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 Pallete::~Pallete(){
 
 }

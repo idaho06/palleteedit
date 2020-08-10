@@ -32,7 +32,8 @@ class Pallete{
         bool setPointIndex(int pos, Uint8 newindex);
         bool setPointIndexLeft(int pos);
         bool setPointIndexRight(int pos);
-        bool delPoint(int index);
+        bool newPointColor(int pos, SDL_Color color);
+        bool delPoint(int pos);
         ~Pallete();
 };
 

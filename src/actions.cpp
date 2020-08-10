@@ -149,6 +149,32 @@ int leftClick(){
     return 0;
 }
 
+int rightClick() {
+    GUIElement gui = GUI_NONE;
+    int x, y, value;
+    SDL_GetMouseState(&x, &y);
+    gui = getGUIElement(x, y);
+
+    switch(G_state){
+        case SELECT_POINT: {
+            switch(gui){
+                case BOX_PALLETE:{
+                    value = x - G_boxPx[0];
+                    if (G_pallete.newPointColor(value, G_pallete.getPointColor(G_cursorPoint))) {
+                        G_redraw.pallete = true;
+                        G_redraw.pointlist = true;
+                        G_redraw.pointcursor = true;
+                    }
+                    break;
+                }
+            } // end of swith(gui)
+            break;
+        }
+    } // end of swith(G_state)
+ 
+    return 0;
+}
+
 int movePointLeft() {
     if (G_pallete.setPointIndexLeft(G_cursorPoint)){
         G_redraw.pallete = true;
@@ -165,6 +191,17 @@ int movePointRight() {
         G_redraw.pallete = true;
         G_redraw.pointlist = true;
         G_redraw.pointcursor = true;                
+        return 0;
+    } else {
+        return -1;
+    }
+}
+
+int delPoint(){
+    if(G_pallete.delPoint(G_cursorPoint)){
+        G_redraw.pallete = true;
+        G_redraw.pointlist = true;
+        G_redraw.pointcursor = true;
         return 0;
     } else {
         return -1;

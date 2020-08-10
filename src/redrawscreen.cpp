@@ -197,12 +197,16 @@ int redrawscreen(SDL_Renderer * renderer, SDL_Surface * surface){
         switch (G_state){
             case SELECT_POINT: 
             {
-                SDL_strlcpy(text,"UP, DOWN: select point in pallete", TLEN);
+                SDL_strlcpy(text,"UP, DOWN   : select point in pallete", TLEN);
                 stringRGBA (renderer, rx+(8*0), ry+(8*0), text, 0x88, 0x88, 0x88, 0xff);
-                SDL_strlcpy(text,"LEFT CLICK: change value", TLEN);
+                SDL_strlcpy(text,"LEFT CLICK : change value", TLEN);
                 stringRGBA (renderer, rx+(8*0), ry+(8*1), text, 0x88, 0x88, 0x88, 0xff);
-                SDL_strlcpy(text,"A, D: move point left, right", TLEN);
+                SDL_strlcpy(text,"RIGHT CLICK: create point", TLEN);
                 stringRGBA (renderer, rx+(8*0), ry+(8*2), text, 0x88, 0x88, 0x88, 0xff);
+                SDL_strlcpy(text,"DEL        : delete point", TLEN);
+                stringRGBA (renderer, rx+(8*0), ry+(8*3), text, 0x88, 0x88, 0x88, 0xff);
+                SDL_strlcpy(text,"A, D       : move point left, right", TLEN);
+                stringRGBA (renderer, rx+(8*0), ry+(8*4), text, 0x88, 0x88, 0x88, 0xff);
                 SDL_strlcpy(text,"ESC: exit", TLEN);
                 stringRGBA (renderer, rx+(8*0), ry+(8*9), text, 0x88, 0x88, 0x88, 0xff);
                 break;

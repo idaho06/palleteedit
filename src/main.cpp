@@ -89,6 +89,10 @@ int checkEvents(){
                         movePointRight();                
                         break;
                     }
+                    case SDLK_BACKSPACE: {
+                        delPoint();
+                        break;
+                    }             
                 } // end of switch (G_event.key.keysym.sym)
                 break;
             } // end of case SDL_KEYUP: 
@@ -102,7 +106,7 @@ int checkEvents(){
                         break;
                     }
                     case SDL_BUTTON_RIGHT: {
-                        //return 1;
+                        rightClick(); // create a new point
                         break;
                     }
                 }                          
