@@ -1,5 +1,6 @@
 #include "pallete.h"
 #include <algorithm> // for std::sort
+#include <fstream> // for std::ofstream and std::ifstream
 
 bool compareColorPoint(ColorPoint cp1, ColorPoint cp2){
     return (cp1.index < cp2.index);
@@ -9,8 +10,14 @@ Pallete::Pallete(){
     // size of pallete is 256 by default
     this->pallete.reserve(256);
 
+    // lets blank it
+    Uint8 i = 0xff;
+    SDL_Color c = {.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xff};
+    do {
+        this->pallete.push_back(c);
+    } while (i--);
+
     // set default point list
-    
     ColorPoint cp;
     //    i   r     g     b     a
     cp = { .index = 10, .color = { .r = 0x10, .g = 0x10, .b = 0x10, .a = 0xff}};
@@ -215,8 +222,21 @@ bool Pallete::delPoint(int pos){
 
 bool Pallete::savePalleteArray(){
     bool result = false;
-    
+    int size = 0;
+    int elementSize = sizeof(SDL_Color);
+    SDL_Color * palleteArray = this->getSDLColorArray(size);
 
+    printf("array size: %d\nPointer: %p\n", size, (void *)palleteArray);
+
+    if((size>0) && (palleteArray != nullptr)){
+        std::ofstream palleteFile ("pallete.pal",
+                std::ios::out | std::ios::binary | std::ios::trunc);
+        if (palleteFile.is_open()){
+            palleteFile.write((char *)palleteArray, size*elementSize);
+            palleteFile.close();
+            result = true;
+        }
+    }
     return result;
 }
 

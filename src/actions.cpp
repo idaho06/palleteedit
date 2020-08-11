@@ -210,7 +210,10 @@ int delPoint(){
 }
 
 int savePalleteArray(){
-    G_pallete.savePalleteArray();
+    if (G_pallete.savePalleteArray()){
+        printf("Pallete saved\n");
+    }
+    
     return 0;
 }
 
