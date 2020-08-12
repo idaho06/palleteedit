@@ -2,13 +2,13 @@
 
 int checkEvents();
 
-int leftClick();
+//int leftClick();
 
-int rightClick();
+//int rightClick();
 
-int movePointLeft();
+//int movePointLeft();
 
-int movePointRight();
+//int movePointRight();
 
-int delPoint();
+//int delPoint();
 

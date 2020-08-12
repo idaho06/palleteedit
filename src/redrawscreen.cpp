@@ -186,9 +186,9 @@ int redrawscreen(SDL_Renderer * renderer, SDL_Surface * surface){
     }
 
     rx = 8*4;
-    ry = 8*48;
+    ry = 8*46;
     width = 8*40;
-    height = 8*10;
+    height = 8*13;
 
     if (G_redraw.instructions){
         //delete old text
@@ -207,12 +207,14 @@ int redrawscreen(SDL_Renderer * renderer, SDL_Surface * surface){
                 stringRGBA (renderer, rx+(8*0), ry+(8*3), text, 0x88, 0x88, 0x88, 0xff);
                 SDL_strlcpy(text,"A, D       : move point left, right", TLEN);
                 stringRGBA (renderer, rx+(8*0), ry+(8*4), text, 0x88, 0x88, 0x88, 0xff);
-                SDL_strlcpy(text,"F5 : save pallete array", TLEN);
-                stringRGBA (renderer, rx+(8*0), ry+(8*7), text, 0x88, 0x88, 0x88, 0xff);
-                SDL_strlcpy(text,"F6 : save color points", TLEN);
-                stringRGBA (renderer, rx+(8*0), ry+(8*8), text, 0x88, 0x88, 0x88, 0xff);
-                SDL_strlcpy(text,"ESC: exit", TLEN);
+                SDL_strlcpy(text,"F1-F4: load color points", TLEN);
                 stringRGBA (renderer, rx+(8*0), ry+(8*9), text, 0x88, 0x88, 0x88, 0xff);
+                SDL_strlcpy(text,"F5   : save pallete array", TLEN);
+                stringRGBA (renderer, rx+(8*0), ry+(8*10), text, 0x88, 0x88, 0x88, 0xff);
+                SDL_strlcpy(text,"F6-F9: save color points", TLEN);
+                stringRGBA (renderer, rx+(8*0), ry+(8*11), text, 0x88, 0x88, 0x88, 0xff);
+                SDL_strlcpy(text,"ESC  : exit", TLEN);
+                stringRGBA (renderer, rx+(8*0), ry+(8*12), text, 0x88, 0x88, 0x88, 0xff);
                 break;
             }
         }
