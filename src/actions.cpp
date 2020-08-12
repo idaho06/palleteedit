@@ -217,6 +217,15 @@ int savePalleteArray(){
     return 0;
 }
 
+int savePointsArray(){
+    if (G_pallete.savePointsArray()){
+        printf("Points saved\n");
+    }
+    
+    return 0;
+}
+
+
 
 int checkEvents(){
     while (SDL_PollEvent(&G_event)){
@@ -271,6 +280,10 @@ int checkEvents(){
                     }
                     case SDLK_F5: {
                         savePalleteArray();
+                        break;
+                    }                     
+                    case SDLK_F6: {
+                        savePointsArray();
                         break;
                     }                     
                 } // end of switch (G_event.key.keysym.sym)

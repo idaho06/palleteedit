@@ -35,6 +35,7 @@ class Pallete{
         bool newPointColor(int pos, SDL_Color color);
         bool delPoint(int pos);
         bool savePalleteArray();
+        bool savePointsArray();
         ~Pallete();
 };
 

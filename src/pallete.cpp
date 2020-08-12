@@ -240,6 +240,27 @@ bool Pallete::savePalleteArray(){
     return result;
 }
 
+bool Pallete::savePointsArray(){
+    bool result = false;
+    int size = 0;
+    int elementSize = sizeof(ColorPoint);
+    ColorPoint * pointArray = this->getColorPointArray(size);
+
+    printf("array size: %d\nPointer: %p\n", size, (void *)pointArray);
+
+    if((size>0) && (pointArray != nullptr)){
+        std::ofstream pointsFile ("points.pps",
+                std::ios::out | std::ios::binary | std::ios::trunc);
+        if (pointsFile.is_open()){
+            pointsFile.write((char *)pointArray, size*elementSize);
+            pointsFile.close();
+            result = true;
+        }
+    }
+    return result;
+}
+
+
 Pallete::~Pallete(){
 
 }
