@@ -69,7 +69,7 @@ int leftClick(){
     gui = getGUIElement(x, y);
 
     switch(G_state){
-        case SELECT_POINT: {
+        case SELECT_POINT: 
             switch(gui){
                 case BOX_RED:{
                     // get new value for RED             
@@ -85,7 +85,7 @@ int leftClick(){
                     G_redraw.pointlist = true;
                     G_redraw.pointcursor = true;
                     break;
-                }
+                             }
                 case BOX_GREEN:{
                     // get new value for GREEN             
                     value = x - G_boxGx[0];
@@ -100,7 +100,7 @@ int leftClick(){
                     G_redraw.pointlist = true;
                     G_redraw.pointcursor = true;
                     break;
-                }
+                               }
                 case BOX_BLUE:{
                     // get new value for BLUE             
                     value = x - G_boxBx[0];
@@ -115,7 +115,7 @@ int leftClick(){
                     G_redraw.pointlist = true;
                     G_redraw.pointcursor = true;
                     break;
-                }
+                              }
                 case BOX_ALPHA:{
                     // get new value for ALPHA             
                     value = x - G_boxAx[0];
@@ -130,7 +130,7 @@ int leftClick(){
                     G_redraw.pointlist = true;
                     G_redraw.pointcursor = true;
                     break;
-                }
+                               }
                 case BOX_PALLETE:{
                     // get new value for index in PALLETE             
                     value = x - G_boxPx[0];
@@ -141,10 +141,10 @@ int leftClick(){
                     G_redraw.pointlist = true;
                     G_redraw.pointcursor = true;
                     break;
-                }
+                                 }
             }            
             break;
-        }
+        
     }            
 
     return 0;
@@ -157,9 +157,9 @@ int rightClick() {
     gui = getGUIElement(x, y);
 
     switch(G_state){
-        case SELECT_POINT: {
+        case SELECT_POINT: 
             switch(gui){
-                case BOX_PALLETE:{
+                case BOX_PALLETE:
                     value = x - G_boxPx[0];
                     if (G_pallete.newPointColor(value, G_pallete.getPointColor(G_cursorPoint))) {
                         G_redraw.pallete = true;
@@ -167,10 +167,10 @@ int rightClick() {
                         G_redraw.pointcursor = true;
                     }
                     break;
-                }
+                
             } // end of swith(gui)
             break;
-        }
+        
     } // end of swith(G_state)
  
     return 0;
@@ -225,101 +225,119 @@ int savePointsArray(int slot){
     return 0;
 }
 
-
+int loadPointsArray(int slot){
+    if (G_pallete.loadPointsArray(slot)){
+        printf("Points load from slot %d\n", slot);
+        G_redraw.pallete = true;
+        G_redraw.pointlist = true;
+        G_redraw.pointcursor = true;
+    }
+    return 0;
+}
 
 int checkEvents(){
     while (SDL_PollEvent(&G_event)){
         switch(G_event.type){
-            case SDL_QUIT: {
+            case SDL_QUIT: 
                 return 1;
                 break;
-            }
+            
             /************
              * KEYBOARD *
              ************/               
-            case SDL_KEYUP: {
+            case SDL_KEYUP: 
                 switch (G_event.key.keysym.sym) {
-                    case SDLK_SPACE: {
+                    case SDLK_SPACE: 
                         break;
-                    }
-                    case SDLK_ESCAPE: {
+                    
+                    case SDLK_ESCAPE: 
                         return 1;                  
                         break;
-                    }
-                    case SDLK_r: {
+                    
+                    case SDLK_r: 
                         G_redraw.ui = true;
                         G_redraw.pallete = true;
                         G_redraw.pointcursor = true;
                         G_redraw.pointlist = true;
                         G_redraw.instructions = true;
                         break;
-                    }
-                    case SDLK_DOWN: {
+                    
+                    case SDLK_DOWN: 
                         G_cursorPoint++;
                         G_redraw.pallete = true;
                         G_redraw.pointcursor = true;
                         break;
-                    }
-                    case SDLK_UP: {
+                    
+                    case SDLK_UP: 
                         G_cursorPoint--;
                         G_redraw.pallete = true;
                         G_redraw.pointcursor = true;
                         break;
-                    }
-                    case SDLK_a: {
+                    
+                    case SDLK_a: 
                         movePointLeft();                
                         break;
-                    }
-                    case SDLK_d: {
+                    
+                    case SDLK_d: 
                         movePointRight();                
                         break;
-                    }
-                    case SDLK_BACKSPACE: {
+                    
+                    case SDLK_BACKSPACE: 
                         delPoint();
                         break;
-                    }
-                    case SDLK_F5: {
+                    
+                    case SDLK_F1: 
+                        loadPointsArray(1);
+                        break;
+                    case SDLK_F2: 
+                        loadPointsArray(2);
+                        break;
+                    case SDLK_F3: 
+                        loadPointsArray(3);
+                        break;
+                    case SDLK_F4: 
+                        loadPointsArray(4);
+                        break;
+
+                    case SDLK_F5: 
                         savePalleteArray();
                         break;
-                    }                     
-                    case SDLK_F6: {
+                    
+                    case SDLK_F6: 
                         savePointsArray(1);
                         break;
-                    }                     
-                    case SDLK_F7: {
+                    case SDLK_F7: 
                         savePointsArray(2);
                         break;
-                    }                     
-                    case SDLK_F8: {
+                    case SDLK_F8: 
                         savePointsArray(3);
                         break;
-                    }                     
-                    case SDLK_F9: {
+                    case SDLK_F9: 
                         savePointsArray(4);
                         break;
-                    }                     
-                    case SDLK_F10: {
+                                         
+                    case SDLK_F10: 
                         break;
-                    }                     
-            } // end of switch (G_event.key.keysym.sym)
+                                         
+                } // end of switch (G_event.key.keysym.sym)
                 break;
-            } // end of case SDL_KEYUP: 
+            // end of case SDL_KEYUP: 
             /*****************
              * MOUSE BUTTONS *
              *****************/                  
-            case SDL_MOUSEBUTTONDOWN: {
+            case SDL_MOUSEBUTTONDOWN: 
                 switch (G_event.button.button) {
-                    case SDL_BUTTON_LEFT: {
+                    case SDL_BUTTON_LEFT: 
                         leftClick(); // checks mouse click position and changes point values                 
                         break;
-                    }
-                    case SDL_BUTTON_RIGHT: {
+                    
+                    case SDL_BUTTON_RIGHT: 
                         rightClick(); // create a new point
                         break;
-                    }
+                    
                 }                          
                 break;                          
-            }
+            
         } // end of switch(G_event.type)
     } // end of while (SDL_PollEvent(&G_event))
     return 0;

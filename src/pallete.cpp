@@ -263,6 +263,48 @@ bool Pallete::savePointsArray(int slot){
     return result;
 }
 
+bool Pallete::loadPointsArray(int slot){
+    bool result = false;
+    if (slot < 1) {slot = 1;}
+    if (slot > 4) {slot = 4;}
+    char file[80];
+    SDL_snprintf(file, 80, "points%d.pps", slot);
+    std::vector<ColorPoint> loadColorPoints;
+    ColorPoint cp = { .index = 0, .color = { .r = 0x00, .g = 0x00, .b = 0x00, .a = 0xff}};
+    std::streamsize colorPointSize = sizeof(ColorPoint);
+    int fileSize = 0;
+    
+    // first, get file size
+    // http://www.cplusplus.com/doc/tutorial/files/
+    std::streampos begin,end;
+    std::ifstream pointsFile (file,
+        std::ios::in|std::ios::binary); // open the file
+    if (pointsFile.is_open()){ // if file has been open
+        begin = pointsFile.tellg(); // get the begin..
+        pointsFile.seekg(0, std::ios::end); // go to end..
+        end = pointsFile.tellg(); // get the end
+        fileSize = end - begin; // calculate file size
+    }    
+
+    if (    (fileSize > 0) && // if file size is non empty and...
+            (fileSize % colorPointSize == 0) && // file size is multiple of point size and...
+            pointsFile.is_open() ) { // the file is still open
+        pointsFile.clear(); // clear file flags
+        pointsFile.seekg(0, std::ios::beg); // go back to beginning of file
+        while(pointsFile.read((char*)&cp, colorPointSize)){ // while we can read a point..
+            loadColorPoints.push_back(cp); // store the point in vector
+        }
+        pointsFile.close(); // we reached end of file, so close it
+    }
+
+    if (loadColorPoints.size() > 0) {
+        this->colorpoints.clear();
+        this->colorpoints = loadColorPoints; // copy vector
+        this->recalculate();
+        result = true;
+    }
+    return result;
+}
 
 Pallete::~Pallete(){
 

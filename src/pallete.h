@@ -36,6 +36,7 @@ class Pallete{
         bool delPoint(int pos);
         bool savePalleteArray();
         bool savePointsArray(int slot = 1);
+        bool loadPointsArray(int slot = 1);
         ~Pallete();
 };
 
