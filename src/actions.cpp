@@ -217,9 +217,9 @@ int savePalleteArray(){
     return 0;
 }
 
-int savePointsArray(){
-    if (G_pallete.savePointsArray()){
-        printf("Points saved\n");
+int savePointsArray(int slot){
+    if (G_pallete.savePointsArray(slot)){
+        printf("Points saved to slot %d\n", slot);
     }
     
     return 0;
@@ -283,10 +283,25 @@ int checkEvents(){
                         break;
                     }                     
                     case SDLK_F6: {
-                        savePointsArray();
+                        savePointsArray(1);
                         break;
                     }                     
-                } // end of switch (G_event.key.keysym.sym)
+                    case SDLK_F7: {
+                        savePointsArray(2);
+                        break;
+                    }                     
+                    case SDLK_F8: {
+                        savePointsArray(3);
+                        break;
+                    }                     
+                    case SDLK_F9: {
+                        savePointsArray(4);
+                        break;
+                    }                     
+                    case SDLK_F10: {
+                        break;
+                    }                     
+            } // end of switch (G_event.key.keysym.sym)
                 break;
             } // end of case SDL_KEYUP: 
             /*****************

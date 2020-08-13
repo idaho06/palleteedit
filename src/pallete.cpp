@@ -27,7 +27,6 @@ Pallete::Pallete(){
     cp = { .index = 250, .color = { .r = 0x0f, .g = 0x00, .b = 0xff, .a = 0xff}};
     this->colorpoints.push_back(cp);
 
-
     this->recalculate();
 
 }
@@ -240,7 +239,11 @@ bool Pallete::savePalleteArray(){
     return result;
 }
 
-bool Pallete::savePointsArray(){
+bool Pallete::savePointsArray(int slot){
+    if (slot < 1) {slot = 1;}
+    if (slot > 4) {slot = 4;}
+    char file[80];
+    SDL_snprintf(file, 80, "points%d.pps", slot); 
     bool result = false;
     int size = 0;
     int elementSize = sizeof(ColorPoint);
@@ -249,7 +252,7 @@ bool Pallete::savePointsArray(){
     printf("array size: %d\nPointer: %p\n", size, (void *)pointArray);
 
     if((size>0) && (pointArray != nullptr)){
-        std::ofstream pointsFile ("points.pps",
+        std::ofstream pointsFile (file,
                 std::ios::out | std::ios::binary | std::ios::trunc);
         if (pointsFile.is_open()){
             pointsFile.write((char *)pointArray, size*elementSize);
