@@ -2,12 +2,9 @@ cmake_policy(SET CMP0048 NEW) # For using VERSION in "project"
 project(pedit VERSION 1.0 DESCRIPTION "Pallete Editor GUI and lib")
 cmake_minimum_required(VERSION 3.16.3)
 
-# flags
-
 # include files
 include_directories( 
     ./src 
-    ../akinopallete/include
     )
 
 # pkg-config calls
@@ -17,7 +14,9 @@ pkg_check_modules(SDL2 REQUIRED IMPORTED_TARGET sdl2)
 #pkg_check_modules(SDL2_MIXER REQUIRED IMPORTED_TARGET SDL2_mixer)
 pkg_check_modules(SDL2_GFX REQUIRED IMPORTED_TARGET SDL2_gfx)
 
-#add_subdirectory(src)
+# We expect the pallete library project to be outside here
+# https://stackoverflow.com/questions/10004134/add-a-dependency-not-in-a-subdirectory-using-cmake
+add_subdirectory( "../akinopallete" "${CMAKE_CURRENT_BINARY_DIR}/akinopallete_build")
 
 #file(GLOB_RECURSE pedit_SOURCES "./src/*.c*")
 #add_executable(pedit ${pedit_SOURCES})
@@ -30,11 +29,6 @@ add_executable(pedit
     src/main.cpp
     src/actions.cpp
     src/redrawscreen.cpp
-    # src/pallete.cpp
-    )
-
-add_library(akinopallete STATIC
-    ../akinopallete/src/pallete.cpp
     )
 
 add_dependencies(pedit
